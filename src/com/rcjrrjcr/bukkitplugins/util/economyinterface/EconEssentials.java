@@ -2,26 +2,36 @@ package com.rcjrrjcr.bukkitplugins.util.economyinterface;
 
 import org.bukkit.entity.Player;
 
-import com.earth2me.essentials.User;
+import com.nijikokun.register.payment.Method.MethodAccount;
+import com.nijikokun.register.payment.methods.EE17;
 import com.rcjrrjcr.bukkitplugins.util.RcjrPlugin;
 
 public class EconEssentials implements IEconHandler {
 
 	private RcjrPlugin origin;
+	/*
+	 * Essentials is phasing out support for it's "native" economy. So I don't expect this util class
+	 * to be around forever.  But rather than try to update it to support Essential 2.2.22+, I'll just
+	 * leverage @nijikokun's Register plug in to get past compile errors (and it will probably work
+	 * too, but I haven't tested).  -morganm 5/28/2011
+	 */
+	private EE17 registerEE17;
 	
 	public EconEssentials(RcjrPlugin origin) {
 		this.origin = origin;
+		registerEE17 = new EE17();
 	}
 
 	@Override
 	public double getBalance(Player player) {
-		return User.get(player).getMoney();
+		return registerEE17.getAccount(player.getName()).balance();
 	}
 
 	@Override
 	public boolean deduct(Player player, Integer cost) {
-		if(!User.get(player).canAfford(cost)) return false;
-		User.get(player).takeMoney(cost);
+		MethodAccount a = registerEE17.getAccount(player.getName());
+		if(!a.hasEnough(cost)) return false;
+		a.subtract(cost);
 		return true;		
 	}
 
@@ -37,7 +47,7 @@ public class EconEssentials implements IEconHandler {
 
 	@Override
 	public void add(Player player, Integer cost) {
-		User.get(player).giveMoney(cost);
+		registerEE17.getAccount(player.getName()).add(cost);
 	}
 
 	@Override

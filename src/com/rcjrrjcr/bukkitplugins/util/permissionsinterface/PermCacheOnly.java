@@ -90,4 +90,18 @@ public class PermCacheOnly implements IPermHandler {
 		
 	}
 
+	/* Temp permissions for Cache Only just use the real thing.
+	 * 
+	 * (non-Javadoc)
+	 * @see com.rcjrrjcr.bukkitplugins.util.permissionsinterface.IPermHandler#addTemporaryPerm(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void addTemporaryPerm(String world, String playerName, String perm) {
+		addPerm(world, playerName, perm);
+	}
+	@Override
+	public void removeTemporaryPerm(String world, String playerName, String perm) {
+		removePerm(world, playerName, perm);
+	}
+
 }

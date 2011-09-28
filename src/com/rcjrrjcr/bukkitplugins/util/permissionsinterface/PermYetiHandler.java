@@ -65,7 +65,7 @@ public class PermYetiHandler implements IPermHandler {
 			return;
 		}
 		permHandle.addUserPermission(world, playerName.toLowerCase(), perm);
-		permHandle.setCacheItem(world, playerName.toLowerCase(), perm, true);
+//		permHandle.setCacheItem(world, playerName.toLowerCase(), perm, true);
 		return;
 	}
 
@@ -81,7 +81,7 @@ public class PermYetiHandler implements IPermHandler {
 			return;
 		}
 		permHandle.removeUserPermission(world, playerName.toLowerCase(), perm);
-		permHandle.setCacheItem(world, playerName.toLowerCase(), perm, false);
+//		permHandle.setCacheItem(world, playerName.toLowerCase(), perm, false);
 	}
 
 	@Override
@@ -138,5 +138,17 @@ public class PermYetiHandler implements IPermHandler {
 		
 	}
 	
-	
+	/* Permissions 2.7 has no concept of temporary permissions, so we just use the real thing.
+	 * 
+	 * (non-Javadoc)
+	 * @see com.rcjrrjcr.bukkitplugins.util.permissionsinterface.IPermHandler#addTemporaryPerm(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void addTemporaryPerm(String world, String playerName, String perm) {
+		addPerm(world, playerName, perm);
+	}
+	@Override
+	public void removeTemporaryPerm(String world, String playerName, String perm) {
+		removePerm(world, playerName, perm);
+	}	
 }

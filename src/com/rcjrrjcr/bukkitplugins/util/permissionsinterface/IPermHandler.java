@@ -15,6 +15,9 @@ public interface IPermHandler
 	public void removePerm(String world,String playerName, String perm);
 	public void setPerm(String world,String playerName, String perm, boolean hasPerm);
 	
+	public void addTemporaryPerm(String world,String playerName, String perm);
+	public void removeTemporaryPerm(String world,String playerName, String perm);
+	
 	public boolean isInGroup(String world,String playerName, String group);
 
 	public String[] listGroups(String world, String playerName);
